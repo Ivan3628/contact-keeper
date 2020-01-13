@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", getContacts);
 
 //Submit contact
 
-const addContact = () => {
+const addContact = e => {
   const name = document.querySelector("#name");
   const email = document.querySelector("#email");
   const phone = document.querySelector("#phone");
