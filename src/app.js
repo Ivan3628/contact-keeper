@@ -17,10 +17,10 @@ document.addEventListener("DOMContentLoaded", getContacts);
 //Submit contact
 
 const addContact = e => {
-  const name = document.querySelector("#name");
-  const email = document.querySelector("#email");
-  const phone = document.querySelector("#phone");
-  const type = document.querySelectorAll('input[name="type"]');
+  const name = document.querySelector("#name").value;
+  const email = document.querySelector("#email").value;
+  const phone = document.querySelector("#phone").value;
+  const type = document.querySelector('input[name="type"]').value;
 
   const data = {
     name: name,
