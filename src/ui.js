@@ -4,11 +4,12 @@ class UI {
     this.nameInput = document.querySelector("#name");
     this.emailInput = document.querySelector("#email");
     this.phoneInput = document.querySelector("#phone");
+    this.radioInput = document.querySelector('input[name="type"]');
   }
 
   showContacts(contacts) {
     let output = "";
-    console.log(contacts);
+    // console.log(contacts);
 
     contacts.forEach(contact => {
       output += `
@@ -40,6 +41,7 @@ class UI {
     this.nameInput.value = "";
     this.emailInput.value = "";
     this.phoneInput.value = "";
+    this.radioInput.checked = false;
   }
 }
 
