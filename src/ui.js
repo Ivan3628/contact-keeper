@@ -5,11 +5,11 @@ class UI {
     this.emailInput = document.querySelector("#email");
     this.phoneInput = document.querySelector("#phone");
     this.radioInput = document.querySelector('input[name="type"]');
+    this.contactForm = document.querySelector("#contact-form");
   }
 
   showContacts(contacts) {
     let output = "";
-    // console.log(contacts);
 
     contacts.forEach(contact => {
       output += `
@@ -38,10 +38,14 @@ class UI {
   }
 
   clearFields() {
-    this.nameInput.value = "";
-    this.emailInput.value = "";
-    this.phoneInput.value = "";
-    this.radioInput.checked = false;
+    this.contactForm.reset();
+  }
+
+  fillForm(data) {
+    this.nameInput.value = data.name;
+    this.emailInput.value = data.email;
+    this.phoneInput.value = data.phone;
+    this.radioInput.value = data.type;
   }
 }
 
