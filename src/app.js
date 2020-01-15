@@ -40,3 +40,50 @@ const addContact = e => {
   e.preventDefault();
 };
 document.querySelector("#contact-form").addEventListener("submit", addContact);
+
+//Delete contact
+
+const deleteContact = e => {
+  if (e.target.parentElement.classList.contains("delete")) {
+    const id = e.target.parentElement.dataset.id;
+    axios
+      .delete(`http://localhost:3000/contacts/${id}`)
+      .then(response => getContacts());
+  }
+};
+
+document
+  .querySelector("#contact-list")
+  .addEventListener("click", deleteContact);
+
+//Edit contact
+
+const editContact = e => {
+  if (e.target.parentElement.classList.contains("edit")) {
+    const id = e.target.parentElement.dataset.id;
+    const name =
+      e.target.parentElement.parentElement.previousElementSibling
+        .previousElementSibling.previousElementSibling.textContent;
+    const type =
+      e.target.parentElement.parentElement.previousElementSibling
+        .previousElementSibling.previousElementSibling.children[0].textContent;
+    const email =
+      e.target.parentElement.parentElement.previousElementSibling
+        .previousElementSibling.textContent;
+    const phone =
+      e.target.parentElement.parentElement.previousElementSibling.textContent;
+
+    const data = {
+      id: id,
+      name: name,
+      email: email,
+      phone: phone,
+      type: type
+    };
+
+    ui.fillForm(data);
+  }
+  e.preventDefault();
+};
+
+document.querySelector("#contact-list").addEventListener("click", editContact);
