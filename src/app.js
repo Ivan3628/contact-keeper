@@ -63,15 +63,18 @@ const editContact = e => {
     const id = e.target.parentElement.dataset.id;
     const name =
       e.target.parentElement.parentElement.previousElementSibling
-        .previousElementSibling.previousElementSibling.textContent;
-    const type =
-      e.target.parentElement.parentElement.previousElementSibling
-        .previousElementSibling.previousElementSibling.children[0].textContent;
+        .previousElementSibling.previousElementSibling.previousElementSibling
+        .textContent;
     const email =
       e.target.parentElement.parentElement.previousElementSibling
-        .previousElementSibling.textContent;
+        .previousElementSibling.previousElementSibling.textContent;
     const phone =
-      e.target.parentElement.parentElement.previousElementSibling.textContent;
+      e.target.parentElement.parentElement.previousElementSibling
+        .previousElementSibling.textContent;
+    const type =
+      e.target.parentElement.parentElement.previousElementSibling
+        .previousElementSibling.previousElementSibling.previousElementSibling
+        .children[0].textContent;
 
     const data = {
       id: id,
