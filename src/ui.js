@@ -1,6 +1,7 @@
 class UI {
   constructor() {
     this.contactList = document.querySelector("#contact-list");
+    this.idInput = document.querySelector("#id");
     this.nameInput = document.querySelector("#name");
     this.emailInput = document.querySelector("#email");
     this.phoneInput = document.querySelector("#phone");
@@ -17,9 +18,10 @@ class UI {
       <div class="col s12">
       <div class="card">
       <div class="card-content">
-      <p class="card-title indigo-text text-darken-4">
-      ${contact.name}
-      <a class="waves-effect indigo darken-4 btn right">${contact.type}</a>
+      <p class="card-title indigo-text text-darken-4">${contact.name}
+      
+      <a class="waves-effect indigo darken-4 btn right"> ${contact.type}</a>
+      
       </p>
       <p><i class="fas fa-envelope-open"></i> ${contact.email}</p>
       
@@ -42,6 +44,7 @@ class UI {
   }
 
   fillForm(data) {
+    this.idInput.value = data.id;
     this.nameInput.value = data.name;
     this.emailInput.value = data.email;
     this.phoneInput.value = data.phone;
