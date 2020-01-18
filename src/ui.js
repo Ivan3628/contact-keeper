@@ -7,6 +7,8 @@ class UI {
     this.phoneInput = document.querySelector("#phone");
     this.radioInput = document.querySelector('input[name="type"]');
     this.contactForm = document.querySelector("#contact-form");
+    this.cancelButton = document.querySelector("#cancel-button");
+    this.submitButton = document.querySelector("#submit-button");
   }
 
   showContacts(contacts) {
@@ -18,7 +20,7 @@ class UI {
       <div class="col s12">
       <div class="card">
       <div class="card-content">
-      <p class="card-title indigo-text text-darken-4">${contact.name}
+      <p class="card-title indigo-text text-darken-4"><span>${contact.name}</span>
       
       <a class="waves-effect indigo darken-4 btn right"> ${contact.type}</a>
       
@@ -49,6 +51,22 @@ class UI {
     this.emailInput.value = data.email;
     this.phoneInput.value = data.phone;
     this.radioInput.value = data.type;
+  }
+
+  showCancelButton() {
+    this.cancelButton.style.display = "block";
+  }
+
+  removeCancelButton() {
+    this.cancelButton.style.display = "none";
+  }
+
+  updateButton() {
+    this.submitButton.className = "btn btn-block green darken-2 update";
+  }
+
+  removeUpdateButton() {
+    this.submitButton.className = "btn btn-block indigo darken-4";
   }
 }
 
