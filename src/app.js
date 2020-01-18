@@ -4,10 +4,8 @@ import axios from "axios";
 //Get contacts on DOM load
 
 const getContacts = () => {
-  axios({
-    method: "get",
-    url: "http://localhost:3000/contacts"
-  })
+  axios
+    .get("http://localhost:3000/contacts")
     .then(response => ui.showContacts(response.data))
     .catch(err => console.log(err));
 };
@@ -64,7 +62,7 @@ const editContact = e => {
     const name =
       e.target.parentElement.parentElement.previousElementSibling
         .previousElementSibling.previousElementSibling.previousElementSibling
-        .textContent;
+        .children[0].textContent;
     const email =
       e.target.parentElement.parentElement.previousElementSibling
         .previousElementSibling.previousElementSibling.textContent;
@@ -74,7 +72,7 @@ const editContact = e => {
     const type =
       e.target.parentElement.parentElement.previousElementSibling
         .previousElementSibling.previousElementSibling.previousElementSibling
-        .children[0].textContent;
+        .children[1].textContent;
 
     const data = {
       id: id,
@@ -85,8 +83,49 @@ const editContact = e => {
     };
 
     ui.fillForm(data);
+    ui.showCancelButton();
+    ui.updateButton();
+    //console.log(data);
   }
   e.preventDefault();
 };
 
 document.querySelector("#contact-list").addEventListener("click", editContact);
+
+//Abort edit
+
+const abortEdit = () => {
+  ui.clearFields();
+  ui.removeCancelButton();
+  ui.removeUpdateButton();
+};
+
+document.querySelector("#cancel-button").addEventListener("click", abortEdit);
+
+//Update contact
+
+const updateContact = e => {
+  const id = document.querySelector("#id").value;
+  const name = document.querySelector("#name").value;
+  const email = document.querySelector("#email").value;
+  constphone = document.querySelector("#phone").value;
+  const type = document.querySelector('input[name="type"]').value;
+
+  const data = {
+    id: id,
+    name: name,
+    email: email,
+    phone: phone,
+    type: type
+  };
+
+  editContact();
+  axios.put(`http://localhost:3000/contacts/${id}`, data).then(response => {
+    getContacts();
+    ui.clearFields();
+    ui.removeCancelButton();
+  });
+  e.preventDefault();
+};
+
+document.querySelector(".update").addEventListener("submit", updateContact);
