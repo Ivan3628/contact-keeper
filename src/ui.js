@@ -61,12 +61,12 @@ class UI {
     this.cancelButton.style.display = "none";
   }
 
-  updateButton() {
-    this.submitButton.className = "btn btn-block green darken-2 update";
+  showSubmitButton() {
+    this.submitButton.className = "btn btn-block indigo darken-4 update";
   }
 
-  removeUpdateButton() {
-    this.submitButton.className = "btn btn-block indigo darken-4";
+  removeSubmitButton() {
+    this.submitButton.className = "btn btn-block indigo darken-4 ";
   }
 }
 
