@@ -12,33 +12,6 @@ const getContacts = () => {
 
 document.addEventListener("DOMContentLoaded", getContacts);
 
-//Submit contact
-
-const addContact = e => {
-  const name = document.querySelector("#name").value;
-  const email = document.querySelector("#email").value;
-  const phone = document.querySelector("#phone").value;
-  const type = document.querySelector('input[name="type"]').value;
-
-  const data = {
-    name: name,
-    email: email,
-    phone: phone,
-    type: type
-  };
-
-  axios
-    .post("http://localhost:3000/contacts", data)
-    .then(response => {
-      ui.clearFields();
-      getContacts();
-    })
-    .catch(err => console.log(err));
-
-  e.preventDefault();
-};
-document.querySelector("#contact-form").addEventListener("submit", addContact);
-
 //Delete contact
 
 const deleteContact = e => {
@@ -84,7 +57,8 @@ const editContact = e => {
 
     ui.fillForm(data);
     ui.showCancelButton();
-    ui.updateButton();
+    ui.showSubmitButton();
+
     //console.log(data);
   }
   e.preventDefault();
@@ -97,35 +71,49 @@ document.querySelector("#contact-list").addEventListener("click", editContact);
 const abortEdit = () => {
   ui.clearFields();
   ui.removeCancelButton();
-  ui.removeUpdateButton();
 };
 
 document.querySelector("#cancel-button").addEventListener("click", abortEdit);
 
-//Update contact
+//Submit contact
 
-const updateContact = e => {
+const submitContact = e => {
   const id = document.querySelector("#id").value;
   const name = document.querySelector("#name").value;
   const email = document.querySelector("#email").value;
-  constphone = document.querySelector("#phone").value;
+  const phone = document.querySelector("#phone").value;
   const type = document.querySelector('input[name="type"]').value;
+  const submitButton = document.querySelector("#submit-button");
 
   const data = {
-    id: id,
     name: name,
     email: email,
     phone: phone,
     type: type
   };
 
-  editContact();
-  axios.put(`http://localhost:3000/contacts/${id}`, data).then(response => {
-    getContacts();
-    ui.clearFields();
-    ui.removeCancelButton();
-  });
+  if (submitButton.classList.contains("update")) {
+    axios
+      .put(`http://localhost:3000/contacts/${id}`, data)
+      .then(response => {
+        getContacts();
+        ui.clearFields();
+        ui.removeCancelButton();
+        ui.removeSubmitButton();
+      })
+      .catch(err => console.log(err));
+  } else {
+    axios
+      .post("http://localhost:3000/contacts", data)
+      .then(response => {
+        getContacts();
+        ui.clearFields();
+      })
+      .catch(err => console.log(err));
+  }
   e.preventDefault();
 };
 
-document.querySelector(".update").addEventListener("submit", updateContact);
+document
+  .querySelector("#submit-button")
+  .addEventListener("click", submitContact);
