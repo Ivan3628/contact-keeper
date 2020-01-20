@@ -16,7 +16,7 @@ class UI {
 
     contacts.forEach(contact => {
       output += `
-      <divclass="row">
+      <divclass="row contact-row">
       <div class="col s12">
       <div class="card">
       <div class="card-content">
