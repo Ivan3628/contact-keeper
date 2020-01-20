@@ -59,7 +59,7 @@ const editContact = e => {
     ui.showCancelButton();
     ui.showSubmitButton();
 
-    //console.log(data);
+    console.log(data);
   }
   e.preventDefault();
 };
@@ -117,3 +117,27 @@ const submitContact = e => {
 document
   .querySelector("#submit-button")
   .addEventListener("click", submitContact);
+
+//Filter contacts
+
+const filterContacts = e => {
+  getContacts();
+
+  //Get filter value
+  const text = e.target.value.toLowerCase();
+
+  //Get contacts
+  document.querySelectorAll(".contact-row").forEach(contact => {
+    const contactName =
+      contact.children[0].children[0].children[0].children[0].children[0]
+        .children[0].textContent;
+
+    if (contactName.toLowerCase().indexOf(text) != -1) {
+      contact.style.display = block;
+    } else {
+      contact.style.display = none;
+    }
+  });
+};
+
+document.querySelector("#filter").addEventListener("keyup", filterContacts);
