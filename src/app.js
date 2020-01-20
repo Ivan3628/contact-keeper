@@ -121,7 +121,7 @@ document
 //Filter contacts
 
 const filterContacts = e => {
-  getContacts();
+ 
 
   //Get filter value
   const text = e.target.value.toLowerCase();
@@ -133,11 +133,12 @@ const filterContacts = e => {
         .children[0].textContent;
 
     if (contactName.toLowerCase().indexOf(text) != -1) {
-      contact.style.display = block;
+      contact.style.display = "block";
     } else {
-      contact.style.display = none;
+      contact.style.display = "none";
     }
   });
+  e.preventDefault();
 };
 
 document.querySelector("#filter").addEventListener("keyup", filterContacts);
