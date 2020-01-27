@@ -7,7 +7,6 @@ class UI {
     this.phoneInput = document.querySelector("#phone");
     this.radioInput = document.querySelector('input[name="type"]');
     this.contactForm = document.querySelector("#contact-form");
-    this.cancelButton = document.querySelector("#cancel-button");
     this.submitButton = document.querySelector("#submit-button");
   }
 
@@ -16,13 +15,13 @@ class UI {
 
     contacts.forEach(contact => {
       output += `
-      <divclass="row contact-row">
+      <div class="row contact-row">
       <div class="col s12">
       <div class="card">
       <div class="card-content">
-      <p class="card-title indigo-text text-darken-4"><span>${contact.name}</span>
+      <p class="card-title indigo-text text-darken-4 "><span>${contact.name}</span>
       
-      <a class="waves-effect indigo darken-4 btn right"> ${contact.type}</a>
+      <a class="waves-effect indigo darken-4 btn right"><span>${contact.type}</span></a>
       
       </p>
       <p><i class="fas fa-envelope-open"></i> ${contact.email}</p>
@@ -30,8 +29,8 @@ class UI {
       <p><i class="fas fa-phone"></i> ${contact.phone}</p>
       <br>
       <p>
-      <a class="waves-effect grey darken-4 btn-flat edit" data-id="${contact.id}"><span class="white-text">Edit</span></a>
-  <a class="waves-effect red darken-2 btn-flat delete" data-id="${contact.id}"><span class="white-text">Delete</span></a>
+      <a class="waves-effect grey darken-4 btn-flat  edit" data-id="${contact.id}"><span class="white-text">Edit</span></a>
+  <a class="waves-effect red darken-2 btn-flat  delete" data-id="${contact.id}"><span class="white-text">Delete</span></a>
       </p>
       </div>
       </div>
@@ -43,6 +42,7 @@ class UI {
 
   clearFields() {
     this.contactForm.reset();
+    this.idInput.value = "";
   }
 
   fillForm(data) {
@@ -54,11 +54,20 @@ class UI {
   }
 
   showCancelButton() {
-    this.cancelButton.style.display = "block";
+    //Create button
+    const button = document.createElement("button");
+    button.appendChild(document.createTextNode("Cancel"));
+    button.id = "cancel-button";
+    button.className = "btn btn-block red darken-2";
+
+    //Introduce parent element
+    const div = document.querySelector(".cancel-container");
+    div.appendChild(button);
   }
 
   removeCancelButton() {
-    this.cancelButton.style.display = "none";
+    const button = document.querySelector("#cancel-button");
+    button.remove();
   }
 
   showSubmitButton() {
