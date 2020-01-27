@@ -5,3 +5,15 @@
 #filter-form {
   margin-top: 3rem;
 }
+/*Media queries*/
+
+@media screen and (max-width: 480px) {
+  #right-col {
+    width: 100%;
+    float: left;
+  }
+  #left-col {
+    width: 100%;
+    float: left;
+  }
+}
