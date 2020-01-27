@@ -1,5 +1,6 @@
 import { ui } from "./ui";
 import axios from "axios";
+import M from "materialize-css/dist/js/materialize.min.js";
 
 //Get contacts on DOM load
 
@@ -45,7 +46,7 @@ const editContact = e => {
     const type =
       e.target.parentElement.parentElement.previousElementSibling
         .previousElementSibling.previousElementSibling.previousElementSibling
-        .children[1].textContent;
+        .children[1].children[0].textContent;
 
     const data = {
       id: id,
@@ -68,12 +69,17 @@ document.querySelector("#contact-list").addEventListener("click", editContact);
 
 //Abort edit
 
-const abortEdit = () => {
-  ui.clearFields();
-  ui.removeCancelButton();
+const abortEdit = e => {
+  if (e.target.parentElement.classList.contains("cancel-container")) {
+    ui.clearFields();
+    ui.removeCancelButton();
+  }
+  e.preventDefault();
 };
 
-document.querySelector("#cancel-button").addEventListener("click", abortEdit);
+document
+  .querySelector(".cancel-container")
+  .addEventListener("click", abortEdit);
 
 //Submit contact
 
@@ -82,7 +88,9 @@ const submitContact = e => {
   const name = document.querySelector("#name").value;
   const email = document.querySelector("#email").value;
   const phone = document.querySelector("#phone").value;
-  const type = document.querySelector('input[name="type"]').value;
+  const type = document.querySelector('input[name="type"]:checked')
+    .parentElement.textContent;
+
   const submitButton = document.querySelector("#submit-button");
 
   const data = {
@@ -92,25 +100,31 @@ const submitContact = e => {
     type: type
   };
 
-  if (submitButton.classList.contains("update")) {
-    axios
-      .put(`http://localhost:3000/contacts/${id}`, data)
-      .then(response => {
-        getContacts();
-        ui.clearFields();
-        ui.removeCancelButton();
-        ui.removeSubmitButton();
-      })
-      .catch(err => console.log(err));
+  //Validate input
+  if (name === "" || email === "" || phone === "") {
+    M.toast({ html: "Please fill in all the input fields" });
   } else {
-    axios
-      .post("http://localhost:3000/contacts", data)
-      .then(response => {
-        getContacts();
-        ui.clearFields();
-      })
-      .catch(err => console.log(err));
+    if (submitButton.classList.contains("update")) {
+      axios
+        .put(`http://localhost:3000/contacts/${id}`, data)
+        .then(response => {
+          getContacts();
+          ui.clearFields();
+          ui.removeCancelButton();
+          ui.removeSubmitButton();
+        })
+        .catch(err => console.log(err));
+    } else {
+      axios
+        .post("http://localhost:3000/contacts", data)
+        .then(response => {
+          getContacts();
+          ui.clearFields();
+        })
+        .catch(err => console.log(err));
+    }
   }
+
   e.preventDefault();
 };
 
@@ -121,8 +135,6 @@ document
 //Filter contacts
 
 const filterContacts = e => {
- 
-
   //Get filter value
   const text = e.target.value.toLowerCase();
 
@@ -130,7 +142,7 @@ const filterContacts = e => {
   document.querySelectorAll(".contact-row").forEach(contact => {
     const contactName =
       contact.children[0].children[0].children[0].children[0].children[0]
-        .children[0].textContent;
+        .textContent;
 
     if (contactName.toLowerCase().indexOf(text) != -1) {
       contact.style.display = "block";
